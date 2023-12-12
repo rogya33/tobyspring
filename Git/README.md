@@ -98,6 +98,17 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
    ### 파일을 무시하기
    Git이 관리할 필요가 없는 보통 로그 파일이나 빌드 시스템이 자동으로 생성한 파일을 무시하려면
    ```.gitignore``` 파일을 만들고 그 안에 무시할 파일 패턴을 적는다.
+
+   - ```touch ./.gitignore``` 명령어를 통해 생성하고
+     ``` plaintext
+     .settings/
+     bin/
+     target/
+     .classpath
+     .project
+
+     ```
+     등을 작성해 넣는다.
    
    ```.gitignore``` 파일에 입력하는 패턴은 아래 규칙을 따른다.
    * 아무것도 없는 라인이나, # 로 시작하는 라인은 무시한다.
