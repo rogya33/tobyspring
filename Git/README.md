@@ -185,7 +185,7 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
       
 ---
 ## 3. Git branch & Merge
-[](https://git-scm.com/book/en/v2/images/basic-branching-1.png)
+![](https://git-scm.com/book/en/v2/images/basic-branching-1.png)
 ```master```브랜치에 커밋을 몇 번 하게되면 위와 같은 상태의 히스토리가 생성된다.
 이 때,
 ``` bash
@@ -193,11 +193,11 @@ $ git branch iss53
 $ git checkout iss53
 ```
 의 명령어를 통해 브랜치를 생성, checkout하게 된다. 히스토리는 다음과 같다.
-[](https://git-scm.com/book/en/v2/images/basic-branching-2.png)
+![](https://git-scm.com/book/en/v2/images/basic-branching-2.png)
 
 ```iss53``` 브랜치를 checkout했기 때문에 HEAD는 iss53 브랜치를 가리킨다. 따라서 뭔가 일을 하고 커밋하면
 ```iss53``` 브랜치가 앞으로 나아간다.
-[](https://git-scm.com/book/en/v2/images/basic-branching-3.png)
+![](https://git-scm.com/book/en/v2/images/basic-branching-3.png)
 해당 상태에서 master 브랜치와 iss53 브랜치를 merge하기 전, 해결해야할 핫픽스가 생겼을 때,
 ```hotfix```라는 브랜치를 만들게 된다
 ``` bash
@@ -208,7 +208,7 @@ $ git commit -a -m 'fixed the broken email address'
 [hotfix 1fb7853] fixed the broken email address
  1 file changed, 2 insertions(+)
 ```
-[](https://git-scm.com/book/en/v2/images/basic-branching-4.png)
+![](https://git-scm.com/book/en/v2/images/basic-branching-4.png)
 
 ```hotfix```브랜치를 ```master```브랜치에 합쳐보자.
 ``` bash
@@ -219,12 +219,12 @@ Fast-forward
  index.html | 2 ++
  1 file changed, 2 insertions(+)
 ```
-[](https://git-scm.com/book/en/v2/images/basic-branching-5.png)
+![](https://git-scm.com/book/en/v2/images/basic-branching-5.png)
 위의 사진에서, C4 커밋이 C2 커밋에 기반한 브랜치 이기 때문에 Merge 과정 없이 최신 커밋인 C4로 이동하게 되고,
 이런 Merge 방식을 "Fast forward" 라고 부른다.
 
 이제 ```hotfix```는 ```master```브랜치에 포함되었고 적용가능한 상태가 되었다면 ```iss53```에서 작업을 이어나간다.
-[](https://git-scm.com/book/en/v2/images/basic-branching-6.png)
+![](https://git-scm.com/book/en/v2/images/basic-branching-6.png)
 ```master```브랜치와 별개로 진행이 되었기 때문에 위와 같은 사진의 형태가 되고
 Merge할 수 있는 수준이 되었다면 합칠 차레이다.
 
@@ -236,9 +236,9 @@ Merge made by the 'recursive' strategy.
 index.html |    1 +
 1 file changed, 1 insertion(+)
 ```
-[](https://git-scm.com/book/en/v2/images/basic-merging-1.png)
+![](https://git-scm.com/book/en/v2/images/basic-merging-1.png)
 현재 브런치가 가리키는 커밋이 Merge할 브랜치의 조상이 아니므로 ```master```와 ```iss53```브랜치를 Merge 하게 되면 "fast-forward"로 Merge하지 않는다.
-[](https://git-scm.com/book/en/v2/images/basic-merging-2.png)
+![](https://git-scm.com/book/en/v2/images/basic-merging-2.png)
 이 경우에는 위와 같은 사진의 형태로, 각 브랜치가 가리키는 커밋 두개와 공통 조상 하나를 사용하여 3-way Merge를 하게된다.
 
 ### 충돌
