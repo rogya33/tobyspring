@@ -1,7 +1,7 @@
 # GIT
 ---
 ## GIT 시작
-1. GIT의 기초
+## 1. GIT의 기초
    * 스냅샷
      Subversion과 Subversion 비슷한 놈들과 Git의 가장 큰 차이점은 데이터를 다루는 방법에 있다.
      큰 틀에서 봤을 때 VCS 시스템 대부분은 관리하는 정보가 파일들의 목록이다.
@@ -52,7 +52,7 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 
 ---
 
-2. 수정 및 저장소에 저장하기
+## 2. 수정 및 저장소에 저장하기
    워킹 디렉토리의 모든 파일은 크게 Tracked(관리대상임)와 Untracked(관리대상이 아님)로 나눈다.
    Tracked 파일은 이미 스냅샷에 포함돼 있던 파일이다. Tracked 파일은 또 Unmodified(수정하지 않음)와 Modified(수정함)
    그리고 Staged(커밋으로 저장소에 기록할) 상태 중 하나이다. 간단히 말하자면 Git이 알고 있는 파일이라는 것이다.
@@ -62,7 +62,8 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
    파일을 Checkout 하고 나서 아무것도 수정하지 않았기 때문에 그렇다.
 
    마지막 커밋 이후 아직 아무것도 수정하지 않은 상태에서 어떤 파일을 수정하면 Git은 그 파일을 Modified 상태로 인식한다.
-   실제로 커밋을 하기 위해서는 이 수정한 파일을 Staged 상태로 만들고, Staged 상태의 파일을 커밋한다. 이런 라이프사이클을 계속 반복한다.
+   실제로 커밋을 하기 위해서는 이 수정한 파일을 Staged 상태로 만들고, Staged 상태의 파일을 커밋한다.
+   이런 라이프사이클을 계속 반복한다.
    ![](https://git-scm.com/book/en/v2/images/lifecycle.png)
 
    ### 파일의 상태 확인하기
@@ -137,4 +138,61 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
    ".git/COMMIT_EDITMSG" 9L, 283C
    ```
    자동으로 생성되는 커밋 메시지의 첫 라인은 비어 있다. 보통 이곳에 코멘터리를 적고 종료하면 새 커밋이 완성된다.
-   
+
+   ### git diff
+   ``` bash
+   $ git diff
+   diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+   index 8ebb991..643e24f 100644
+   --- a/CONTRIBUTING.md
+   +++ b/CONTRIBUTING.md
+   @@ -65,7 +65,8 @@ branch directly, things can get messy.
+   Please include a nice description of your changes when you submit your PR;
+   if we have to read the whole diff to figure out why you're contributing
+   in the first place, you're less likely to get feedback and have your change
+   -merged in.
+   +merged in. Also, split your changes into comprehensive chunks if your patch is
+   +longer than a dozen lines.
+
+   If you are starting to work on a particular area, feel free to submit a PR
+   that highlights your work in progress (and note in the PR title that it's
+   ```
+   ```CONTRIBUTING.md``` 파일의 변경 사항을 보기 위해 ```git diff```명령어를 사용했다.
+   1. diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+      - 비교되는 파일이 ```CONTRIBUTING.md```임을 나타낸다.
+        ```a/CONTRIBUTING.md```와 ```b/CONTRIBUTING.md```는 변경 전후의 파일 상태를 나타낸다.
+   2. index 8ebb991..643e24f 100644
+      - 파일 이전 버전과 새 버전의 해시 값을 보여준다. 8ebb991은 변경 전의 파일을,
+        643e24f는 변경 후의 버전을 나타낸다. 100644는 파일의 권한(모드)를 나타낸다.
+   3. ---a/CONTRIBUTING.md
+      - 변경 전의 파일 상태
+   4. +++b/CONTRIBUTING.md
+      - 변경 이후의 파일 상태
+   5. @@ -65, 7 +65, 8 @@
+      - 이 부분은 변경이 발생한 코드의 위치를 나타낸다.
+        여기서 -65, 7은 원본 파일에서 65번째 줄부터 7줄이 변경의 대상이었음을,
+        +65, 8은 새 파일에서는 65번째 줄부터 8줄이 되었음을 의미한다.
+   6. 변경된 내용:
+      - 원래 텍스트 :
+        ``` bash
+        -merged in.
+        ```
+      - 변경된 텍스트 :
+        ``` bash
+        +merged in. Also, split your changes into comprehensive chunks if your patch is
+        +longer than a dozen lines.
+        ```
+      
+---
+## 3. Git branch & Merge
+[](https://git-scm.com/book/en/v2/images/basic-branching-1.png)
+```master```브랜치에 커밋을 몇 번 하게되면 위와 같은 상태의 히스토리가 생성된다.
+이 때,
+``` bash
+$ git branch iss53
+$ git checkout iss53
+```
+의 명령어를 통해 브랜치를 생성, checkout하게 된다. 히스토리는 다음과 같다.
+[](https://git-scm.com/book/en/v2/images/basic-branching-2.png)
+
+i53 브랜치를 checkout했기 때문에
