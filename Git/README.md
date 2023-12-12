@@ -270,4 +270,5 @@ Git은 자동으로 Merge하지 못했기 때문에 새 커밋이 생기지 않�
 ---
 ```$ git log --online --decorate -- graph --all```
 ```Bash```에서 브랜치를 시각적으로 보여줌
+
 HEAD : 마지막 커밋을 가리키는 ```포인터```
