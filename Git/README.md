@@ -195,4 +195,75 @@ $ git checkout iss53
 의 명령어를 통해 브랜치를 생성, checkout하게 된다. 히스토리는 다음과 같다.
 [](https://git-scm.com/book/en/v2/images/basic-branching-2.png)
 
-i53 브랜치를 checkout했기 때문에
+```iss53``` 브랜치를 checkout했기 때문에 HEAD는 iss53 브랜치를 가리킨다. 따라서 뭔가 일을 하고 커밋하면
+```iss53``` 브랜치가 앞으로 나아간다.
+[](https://git-scm.com/book/en/v2/images/basic-branching-3.png)
+해당 상태에서 master 브랜치와 iss53 브랜치를 merge하기 전, 해결해야할 핫픽스가 생겼을 때,
+```hotfix```라는 브랜치를 만들게 된다
+``` bash
+$ git checkout -b hotfix
+Switched to a new branch 'hotfix'
+$ vim index.html
+$ git commit -a -m 'fixed the broken email address'
+[hotfix 1fb7853] fixed the broken email address
+ 1 file changed, 2 insertions(+)
+```
+[](https://git-scm.com/book/en/v2/images/basic-branching-4.png)
+
+```hotfix```브랜치를 ```master```브랜치에 합쳐보자.
+``` bash
+$ git checkout master
+$ git merge hotfix
+Updating f42c576..3a0874c
+Fast-forward
+ index.html | 2 ++
+ 1 file changed, 2 insertions(+)
+```
+[](https://git-scm.com/book/en/v2/images/basic-branching-5.png)
+위의 사진에서, C4 커밋이 C2 커밋에 기반한 브랜치 이기 때문에 Merge 과정 없이 최신 커밋인 C4로 이동하게 되고,
+이런 Merge 방식을 "Fast forward" 라고 부른다.
+
+이제 ```hotfix```는 ```master```브랜치에 포함되었고 적용가능한 상태가 되었다면 ```iss53```에서 작업을 이어나간다.
+[](https://git-scm.com/book/en/v2/images/basic-branching-6.png)
+```master```브랜치와 별개로 진행이 되었기 때문에 위와 같은 사진의 형태가 되고
+Merge할 수 있는 수준이 되었다면 합칠 차레이다.
+
+``` bash
+$ git checkout master
+Switched to branch 'master'
+$ git merge iss53
+Merge made by the 'recursive' strategy.
+index.html |    1 +
+1 file changed, 1 insertion(+)
+```
+[](https://git-scm.com/book/en/v2/images/basic-merging-1.png)
+현재 브런치가 가리키는 커밋이 Merge할 브랜치의 조상이 아니므로 ```master```와 ```iss53```브랜치를 Merge 하게 되면 "fast-forward"로 Merge하지 않는다.
+[](https://git-scm.com/book/en/v2/images/basic-merging-2.png)
+이 경우에는 위와 같은 사진의 형태로, 각 브랜치가 가리키는 커밋 두개와 공통 조상 하나를 사용하여 3-way Merge를 하게된다.
+
+### 충돌
+가끔 3-way Merge가 실패할 때도 있는데, Merge 하는 두 브랜치에서 같은 파일의 한 부분을
+동시에 수정하게 되면 Git은 해당 부분을 Merge하지 못한다.
+``` bash
+$ git merge iss53
+Auto-merging index.html
+CONFLICT (content): Merge conflict in index.html
+Automatic merge failed; fix conflicts and then commit the result.
+```
+Git은 자동으로 Merge하지 못했기 때문에 새 커밋이 생기지 않았고, 변경사항의 충돌을
+개발자가 해결하도록 둔다.
+```plaintext
+<<<<<<< HEAD:index.html
+<div id="footer">contact : email.support@github.com</div>
+=======
+<div id="footer">
+ please contact us at support@github.com
+</div>
+>>>>>>> iss53:index.html
+```
+```index.html```파일에서 충돌이 일어났고, 충돌이 난 부분을 표준 형식에 따라 표시해준다.
+```=======``` 위쪽의 내용은 HEAD 버전(보통은 ```master```브랜치)의 내용이고 아래는
+```iss53```의 내용이다. 이를 해결하기 위해 둘 중 하나를 고르거나 새로 작성하여야 한다.
+해결 후, ```git add```로 저장, commit하게 되면 Merge한 것을 커밋한다.
+
+
